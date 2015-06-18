@@ -1,0 +1,4 @@
+---
+# tasks file for ansible-db-import
+- name: Import MySQL DB
+   mysql_db: state=import name= target=

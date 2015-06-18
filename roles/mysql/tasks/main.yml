@@ -1,0 +1,30 @@
+---
+# tasks file for mysql
+
+  - name: Install MySQL server
+    apt: name={{ item }} state=latest
+    with_items:
+      - python-mysqldb
+      - mysql-server
+
+  - name: Set the root password
+    mysql_user: name=root password={{ mysql_root_password }} state=present
+    tags: mysql
+
+  - name: Create the MySQL file needed for client login
+    template: src=my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+    tags: mysql
+
+  - name: Create the {{ mysql_user }} user and grants
+    mysql_user: name={{ mysql_user }} password={{ mysql_password }} priv=dbase.*:ALL,GRANT state=present
+    tags: mysql
+
+  - name: Create the {{ mysql_db }} database
+    mysql_db: name={{ mysql_db }} state=present
+    tags: mysql
+
+  - name: Change MySQL bind
+    template: src=my.cnf_server.j2 dest=/etc/mysql/my.cnf owner=root mode=0644
+    tags: mysql
+    notify: Restart MySQL server
+    

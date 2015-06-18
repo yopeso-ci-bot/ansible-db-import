@@ -1,0 +1,34 @@
+---
+provisioner:
+  name: ansible_playbook
+  roles_path: ./roles
+
+platforms:
+   - name: ubuntu-14.04
+     driver_plugin: vagrant
+     driver:
+       box: opscode-ubuntu-14.04
+       box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+       customize:
+         memory: 1024
+         cpus: 2
+       network:
+         - ["forwarded_port", {guest: 1337, host: 1337}]
+         - ["forwarded_port", {guest: 27017, host: 27017}]
+
+suites:
+  - name: default
+    provisioner:
+      playbook: default.yml
+      hosts: default
+
+  - name: vagrant
+    provisioner:
+      playbook: vagrant.yml
+      hosts: vagrant
+
+transport:
+  compression: none
+
+busser:
+  ruby_bindir: /usr/bin

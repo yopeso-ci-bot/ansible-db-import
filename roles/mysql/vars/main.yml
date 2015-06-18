@@ -1,0 +1,8 @@
+---
+# vars file for mysql
+
+  mysql_user: dbuser
+  mysql_db: dbase
+  mysql_password: 8ne3a3cbQLV9YPSAPwnc
+  mysql_root_password: 0kWw5QG1hSYf5f1HxmPv
+  bind_address: 0.0.0.0

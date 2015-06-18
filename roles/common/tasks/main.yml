@@ -1,0 +1,17 @@
+---
+# tasks file for common
+
+  - name: Install needed system tools
+    apt: name={{ item }} state=latest
+    with_items:
+      - curl
+      - vim
+      - htop
+      - build-essential
+      - wget
+      - atop
+      - unzip
+      - openssl
+      - git
+      - sudo
+      - ruby
